@@ -1,0 +1,75 @@
+<html>
+<head>
+    <title> Book </title>
+</head>
+
+<body>
+    <h1 style="color: rgb(123, 20, 212);"> LIBRARY HOME PAGE</h1><hr>
+
+    <h50><p>For Books On HTML Basics &#128073;<a for href="https://www.w3schools.com/html/""> <u>click here</u></a></p></h50> 
+    
+    <h3> Book Form </h3>
+
+    <form action="/save-book/" method="POST">
+        {% csrf_token %}
+        Book ID : <input type="text"value="{{book.id}}" name="id" readonly ><br><br>
+        Book Name : <input type="text"value="{{book.name}}" name="name" required><br><br>
+        Book Author : <input type="text" value="{{book.author}}" name="Author" required><br><br>
+        Book Quantity : <input type="number" value="{{book.qty}}"name="Quantity" required><br><br>
+        Book Price : <input type="number" value="{{book.price}}"name="Price" required><br><br>
+        <!-- Book Publish:<input type="checkbox" name="Publish" checked><br><br> -->
+        {% if book.is_published %}
+            Book Published: <input type="checkbox" name="Publish" checked={{book.is_published}}><br><br>
+        {% else %}
+            Book Published: <input type="checkbox" name="Publish" ><br><br>
+        {% endif %}
+
+        {% if book %}
+            <input type="submit" value="Update Book">
+        {% else %}
+            <input type="submit" value="Add Book">
+        {% endif %}
+
+        <!-- <input type="submit"value="Submit Book"<br><br> -->
+
+
+    </form>
+
+    <table border="2"> 
+        <thead>
+           <th>ID</th>
+           <th>Name</th> 
+           <th>Auther</th> 
+           <th>Quantity</th> 
+           <th>price</th> 
+           <th>Publish Status</th> 
+           <th>Actions</th>
+        </thead>
+        <tbody>
+            {% for b in books %}
+               
+                <tr>
+                    <td>{{b.id}}</td>
+                    <td>{{b.name}}</td>
+                    <td>{{b.author}}</td>
+                    <td>{{b.qty}}</td>
+                    <td>{{b.price}}</td>
+                    <td>{{b.is_published}}</td>
+                    <td>
+                        <a href="/edit-book/{{b.id}}/" >Edit</a> |
+                        <a href="/delete-book/{{b.id}}/" >Delete</a>
+
+                    </td>
+                </tr>
+                
+
+            {% endfor %}
+        </tbody>
+
+    </table>
+    
+    
+</body>
+
+</html>
+
